@@ -28,39 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
             this.lbSite = new System.Windows.Forms.Label();
             this.lbDepartment = new System.Windows.Forms.Label();
             this.siteList = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.allTab = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.prtSearch = new System.Windows.Forms.TextBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.filterTab = new System.Windows.Forms.TabPage();
             this.depList = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.removeTab = new System.Windows.Forms.TabPage();
             this.remButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbPrinter = new System.Windows.Forms.Label();
             this.prtList = new System.Windows.Forms.CheckedListBox();
             this.addButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.allTab.SuspendLayout();
+            this.filterTab.SuspendLayout();
+            this.removeTab.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(147, 808);
-            this.button1.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(175, 51);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Get Printers";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lbSite
             // 
@@ -72,7 +59,6 @@
             this.lbSite.Size = new System.Drawing.Size(79, 40);
             this.lbSite.TabIndex = 2;
             this.lbSite.Text = "Site";
-            this.lbSite.Click += new System.EventHandler(this.label1_Click);
             // 
             // lbDepartment
             // 
@@ -85,7 +71,6 @@
             this.lbDepartment.TabIndex = 3;
             this.lbDepartment.Text = "Department";
             this.lbDepartment.Visible = false;
-            this.lbDepartment.Click += new System.EventHandler(this.label2_Click);
             // 
             // siteList
             // 
@@ -100,28 +85,29 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.allTab);
+            this.tabControl1.Controls.Add(this.filterTab);
+            this.tabControl1.Controls.Add(this.removeTab);
             this.tabControl1.Location = new System.Drawing.Point(28, 27);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(492, 1033);
             this.tabControl1.TabIndex = 8;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
-            // tabPage2
+            // allTab
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.prtSearch);
-            this.tabPage2.Location = new System.Drawing.Point(10, 47);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.tabPage2.Size = new System.Drawing.Size(472, 976);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "All";
+            this.allTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.allTab.Controls.Add(this.label1);
+            this.allTab.Controls.Add(this.prtSearch);
+            this.allTab.Location = new System.Drawing.Point(10, 47);
+            this.allTab.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.allTab.Name = "allTab";
+            this.allTab.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.allTab.Size = new System.Drawing.Size(472, 976);
+            this.allTab.TabIndex = 1;
+            this.allTab.Text = "All";
             // 
             // label1
             // 
@@ -145,21 +131,20 @@
             this.prtSearch.TabIndex = 0;
             this.prtSearch.TextChanged += new System.EventHandler(this.prtSearch_TextChanged);
             // 
-            // tabPage1
+            // filterTab
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage1.Controls.Add(this.depList);
-            this.tabPage1.Controls.Add(this.lbDepartment);
-            this.tabPage1.Controls.Add(this.siteList);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.lbSite);
-            this.tabPage1.Location = new System.Drawing.Point(10, 47);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.tabPage1.Size = new System.Drawing.Size(472, 976);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Filter";
+            this.filterTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.filterTab.Controls.Add(this.depList);
+            this.filterTab.Controls.Add(this.lbDepartment);
+            this.filterTab.Controls.Add(this.siteList);
+            this.filterTab.Controls.Add(this.lbSite);
+            this.filterTab.Location = new System.Drawing.Point(10, 47);
+            this.filterTab.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.filterTab.Name = "filterTab";
+            this.filterTab.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.filterTab.Size = new System.Drawing.Size(472, 976);
+            this.filterTab.TabIndex = 0;
+            this.filterTab.Text = "Filter";
             // 
             // depList
             // 
@@ -171,18 +156,17 @@
             this.depList.Size = new System.Drawing.Size(275, 207);
             this.depList.TabIndex = 8;
             // 
-            // tabPage3
+            // removeTab
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage3.Controls.Add(this.remButton);
-            this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Location = new System.Drawing.Point(10, 47);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(472, 976);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Remove";
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
+            this.removeTab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.removeTab.Controls.Add(this.remButton);
+            this.removeTab.Controls.Add(this.label2);
+            this.removeTab.Location = new System.Drawing.Point(10, 47);
+            this.removeTab.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.removeTab.Name = "removeTab";
+            this.removeTab.Size = new System.Drawing.Size(472, 976);
+            this.removeTab.TabIndex = 2;
+            this.removeTab.Text = "Remove";
             // 
             // remButton
             // 
@@ -255,31 +239,30 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.allTab.ResumeLayout(false);
+            this.allTab.PerformLayout();
+            this.filterTab.ResumeLayout(false);
+            this.filterTab.PerformLayout();
+            this.removeTab.ResumeLayout(false);
+            this.removeTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lbSite;
         private System.Windows.Forms.Label lbDepartment;
         private System.Windows.Forms.ListBox siteList;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage filterTab;
+        private System.Windows.Forms.TabPage allTab;
         private System.Windows.Forms.ListBox depList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox prtSearch;
         private System.Windows.Forms.Label lbPrinter;
         private System.Windows.Forms.CheckedListBox prtList;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage removeTab;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button remButton;
         private System.Windows.Forms.Label label2;

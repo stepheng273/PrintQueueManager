@@ -19,48 +19,16 @@ namespace PrintQueues
         {
             InitializeComponent();
 
-            //Tries to find the server. If it can't then it will display an error popup
             printer = new Printer();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void depVisible(bool b)
-        {
-            lbDepartment.Visible = b;
-            depList.Visible = b;
-        }
-
-        private void printerVisible(bool b)
-        {
-            lbPrinter.Visible = b;
-            prtList.Visible = b;
         }
 
         private void listSite_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (siteList.SelectedItem.Equals("MC") || siteList.SelectedItem.Equals("BB"))
+            if (siteList.SelectedItem.Equals("MC"))
             {
-                depVisible(true);
+
             }
-            else
-            {
-                depVisible(false);
-                printerVisible(true);
-            }
+
         }
 
         private void prtSearch_TextChanged(object sender, EventArgs e)
@@ -86,12 +54,22 @@ namespace PrintQueues
             }
         }
 
-        private void tabPage3_Click(object sender, EventArgs e)
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            prtList.Items.Clear();
-            foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            Console.WriteLine(tabControl1.SelectedTab.Name);
+            if (tabControl1.SelectedTab.Text == "All")
             {
-                prtList.Items.Add(s);
+                prtList.Items.Clear();
+                printer.updatePrtList(prtList, prtSearch);
+            }
+
+            else if (tabControl1.SelectedTab.Text == "Remove")
+            {
+                prtList.Items.Clear();
+                foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+                {
+                    prtList.Items.Add(s);
+                }
             }
         }
     }

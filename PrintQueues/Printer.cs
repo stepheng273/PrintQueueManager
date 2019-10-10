@@ -53,14 +53,22 @@ namespace PrintQueues
         public void addQueue(String queue)
         {
             string cmd = "rundll32 printui.dll,PrintUIEntry /ga /n\\\\GHSMSPS01\\" + queue;
-            Console.WriteLine(cmd);
-            //System.Diagnostics.Process.Start("CMD.exe, cmd");
+            //Console.WriteLine(cmd);
+            System.Diagnostics.Process.Start("CMD.exe, cmd");
         }
 
         public void removeQueue(String queue)
         {
             string cmd = "rundll32 printui.dll,PrintUIEntry /gd /n\\\\GHSMSPS01\\" + queue;
-            Console.WriteLine(cmd);
+            //Console.WriteLine(cmd);
+            System.Diagnostics.Process.Start("CMD.exe, cmd");
+            restartSpooler();
+        }
+
+        private void restartSpooler()
+        {
+            string cmd = "start /wait sc stop spooler\nstart / wait sc start spooler";
+            System.Diagnostics.Process.Start("CMD.exe, cmd");
         }
     }
 }
