@@ -42,6 +42,7 @@ namespace PrintQueues
             {
                 String queue = o.ToString();
                 printer.addQueue(queue);
+                printer.
             }
         }
 

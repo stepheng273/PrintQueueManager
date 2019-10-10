@@ -52,23 +52,66 @@ namespace PrintQueues
 
         public void addQueue(String queue)
         {
-            string cmd = "rundll32 printui.dll,PrintUIEntry /ga /n\\\\GHSMSPS01\\" + queue;
+            string qCmd = "rundll32 printui.dll,PrintUIEntry /ga /n\\\\GHSMSPS01\\" + queue;
             //Console.WriteLine(cmd);
-            System.Diagnostics.Process.Start("CMD.exe, cmd");
+            //System.Diagnostics.Process.Start("CMD.exe, cmd");
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(qCmd);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+
+            System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
+            System
         }
 
         public void removeQueue(String queue)
         {
-            string cmd = "rundll32 printui.dll,PrintUIEntry /gd /n\\\\GHSMSPS01\\" + queue;
-            //Console.WriteLine(cmd);
-            System.Diagnostics.Process.Start("CMD.exe, cmd");
+            string qCmd = "rundll32 printui.dll,PrintUIEntry /gd /n" + queue;
+            Console.WriteLine(qCmd);
+            //System.Diagnostics.Process.Start("CMD.exe", cmd);
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(qCmd);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
             restartSpooler();
         }
 
         private void restartSpooler()
         {
-            string cmd = "start /wait sc stop spooler\nstart / wait sc start spooler";
-            System.Diagnostics.Process.Start("CMD.exe, cmd");
+            string qCmd = "start /wait sc stop spooler\nstart / wait sc start spooler";
+            //System.Diagnostics.Process.Start("CMD.exe", cmd);
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(qCmd);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+
         }
     }
 }
