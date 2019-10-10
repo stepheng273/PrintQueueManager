@@ -38,23 +38,13 @@ namespace PrintQueues
 
         }
 
-        private void cmbSite_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void cmbDepartment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            printVisible(true);
-        }
-
         private void depVisible(bool b)
         {
             lbDepartment.Visible = b;
             depList.Visible = b;
         }
 
-        private void printVisible(bool b)
+        private void printerVisible(bool b)
         {
             lbPrinter.Visible = b;
             prtList.Visible = b;
@@ -69,7 +59,7 @@ namespace PrintQueues
             else
             {
                 depVisible(false);
-                printVisible(true);
+                printerVisible(true);
             }
         }
 
@@ -84,6 +74,24 @@ namespace PrintQueues
             {
                 String queue = o.ToString();
                 printer.addQueue(queue);
+            }
+        }
+
+        private void remButton_Click(object sender, EventArgs e)
+        {
+            foreach (object o in prtList.CheckedItems)
+            {
+                String queue = o.ToString();
+                printer.removeQueue(queue);
+            }
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+            prtList.Items.Clear();
+            foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            {
+                prtList.Items.Add(s);
             }
         }
     }

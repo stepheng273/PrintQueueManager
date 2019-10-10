@@ -56,5 +56,11 @@ namespace PrintQueues
             Console.WriteLine(cmd);
             //System.Diagnostics.Process.Start("CMD.exe, cmd");
         }
+
+        public void removeQueue(String queue)
+        {
+            string cmd = "rundll32 printui.dll,PrintUIEntry /gd /n\\\\GHSMSPS01\\" + queue;
+            Console.WriteLine(cmd);
+        }
     }
 }
