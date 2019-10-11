@@ -20,15 +20,7 @@ namespace PrintQueues
             InitializeComponent();
 
             printer = new Printer();
-        }
-
-        private void listSite_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (siteList.SelectedItem.Equals("MC"))
-            {
-
-            }
-
+            printer.updatePrtList(prtList, prtSearch);
         }
 
         private void prtSearch_TextChanged(object sender, EventArgs e)
@@ -42,7 +34,6 @@ namespace PrintQueues
             {
                 String queue = o.ToString();
                 printer.addQueue(queue);
-                printer.
             }
         }
 
@@ -51,26 +42,26 @@ namespace PrintQueues
             foreach (object o in prtList.CheckedItems)
             {
                 String queue = o.ToString();
+                System.Console.WriteLine(queue);
                 printer.removeQueue(queue);
             }
+            printer.updatePrtList(prtList);
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(tabControl1.SelectedTab.Name);
-            if (tabControl1.SelectedTab.Text == "All")
+            //Console.WriteLine(tabControl1.SelectedTab.Name);
+            if (tabControl1.SelectedTab.Text == "Add")
             {
                 prtList.Items.Clear();
                 printer.updatePrtList(prtList, prtSearch);
+                addButton.Visible = true;
             }
 
             else if (tabControl1.SelectedTab.Text == "Remove")
             {
-                prtList.Items.Clear();
-                foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-                {
-                    prtList.Items.Add(s);
-                }
+                printer.updatePrtList(prtList);
+                addButton.Visible = false;
             }
         }
     }
