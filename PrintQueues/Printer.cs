@@ -37,11 +37,11 @@ namespace PrintQueues
             pqc = myPrintServer.GetPrintQueues();
         }
 
-        public void updatePrtList(object checkList, object textBox = null)
+        public void updatePrtList(object checkList, object textBox = null, string ar = "add")
         {
             CheckedListBox prtList = checkList as CheckedListBox;
             prtList.Items.Clear();
-            if (textBox != null) 
+            if (textBox != null && ar == "add") 
             {
                 TextBox prtSearch = textBox as TextBox;
                 foreach (System.Printing.PrintQueue pq in pqc)
@@ -51,6 +51,28 @@ namespace PrintQueues
                     {
                         prtList.Items.Add(pq.Name);
                     }
+                }
+            }
+
+            else if (textBox != null && ar == "remove")
+            {
+                TextBox prtSearch = textBox as TextBox;
+
+                System.Management.Automation.Runspaces.Runspace runspace = System.Management.Automation.Runspaces.RunspaceFactory.CreateRunspace();
+                runspace.Open();
+
+                PowerShell ps = PowerShell.Create(); // Create a new PowerShell instance
+                ps.Runspace = runspace; // Add the instance to the runspace
+                ps.Commands.AddScript("Invoke-Command -Computer " + prtSearch.Text + " -ScriptBlock {Get-Printer -ComputerName HOST7 | Format-List Name}"); // Add a script
+                //ps.Commands.AddStatement().AddScript("Invoke-Command -Computer server2 -ScriptBlock {ipconfig}"); // Add a second statement and add another script to it
+                System.Collections.ObjectModel.Collection<PSObject> results = ps.Invoke();
+
+                runspace.Close();
+
+                StringBuilder stringBuilder = new StringBuilder();
+                foreach (PSObject obj in results)
+                {
+                    prtList.Items.Add(obj.ToString());
                 }
             }
 

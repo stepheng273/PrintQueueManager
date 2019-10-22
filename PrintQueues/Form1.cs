@@ -57,7 +57,7 @@ namespace PrintQueues
             //Console.WriteLine(tabControl1.SelectedTab.Name);
             if (tabControl1.SelectedTab.Text == "Add")
             {
-                prtList.Items.Clear();
+                //prtList.Items.Clear();
                 printer.updatePrtList(prtList, prtSearch);
                 addLocalButton.Visible = true;
             }
@@ -90,6 +90,22 @@ namespace PrintQueues
                 pcName.Enabled = true;
             }
 
+            if (remLocalRadio.Checked)
+            {
+                remButton.Enabled = true;
+                remPcText.Enabled = false;
+                getPrtButton.Enabled = false;
+                remRemoveButton.Enabled = false;
+            }
+
+            else if (remRemoteRadio.Checked)
+            {
+                remButton.Enabled = false;
+                remPcText.Enabled = true;
+                getPrtButton.Enabled = true;
+                remRemoveButton.Enabled = true;
+            }
+
         }
 
         private void addRemoteButton_Click(object sender, EventArgs e)
@@ -101,6 +117,11 @@ namespace PrintQueues
                 //passing pc name, queue name, and add/remove printer(T/F)
                 printer.remoteQueue(pc, queue, true);
             }
+        }
+
+        private void getPrtButton_Click(object sender, EventArgs e)
+        {
+            printer.updatePrtList(prtList, remPcText, "remove");
         }
     }
 }
