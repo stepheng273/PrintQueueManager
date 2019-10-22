@@ -21,6 +21,10 @@ namespace PrintQueues
 
             printer = new Printer();
             printer.updatePrtList(prtList, prtSearch);
+
+            //Enables/disables various objects based off of the radio button selection at startup
+            buttonStatus();
+            
         }
 
         private void prtSearch_TextChanged(object sender, EventArgs e)
@@ -55,13 +59,47 @@ namespace PrintQueues
             {
                 prtList.Items.Clear();
                 printer.updatePrtList(prtList, prtSearch);
-                addButton.Visible = true;
+                addLocalButton.Visible = true;
             }
 
             else if (tabControl1.SelectedTab.Text == "Remove")
             {
                 printer.updatePrtList(prtList);
-                addButton.Visible = false;
+                addLocalButton.Visible = false;
+            }
+        }
+
+        private void localRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStatus();
+        }
+
+        private void buttonStatus()
+        {
+            if (localRadio.Checked)
+            {
+                addLocalButton.Enabled = true;
+                addRemoteButton.Enabled = false;
+                pcName.Enabled = false;
+            }
+
+            else if(remoteRadio.Checked)
+            {
+                addLocalButton.Enabled = false;
+                addRemoteButton.Enabled = true;
+                pcName.Enabled = true;
+            }
+
+        }
+
+        private void addRemoteButton_Click(object sender, EventArgs e)
+        {
+            string pc = pcName.Text;
+            foreach (object o in prtList.CheckedItems)
+            {
+                String queue = o.ToString();
+                //passing pc name, queue name, and add/remove printer(T/F)
+                printer.remoteQueue(pc, queue, true);
             }
         }
     }

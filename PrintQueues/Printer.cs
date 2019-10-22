@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ServiceProcess;
+using Microsoft.Management.Infrastructure;
+using System.Management.Automation;
 
 namespace PrintQueues
 {
@@ -83,6 +85,34 @@ namespace PrintQueues
             Console.WriteLine(cmd.StandardOutput.ReadToEnd());
 
             System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
+        }
+
+        public void remoteQueue(String pc, String queue, bool adding)
+        {
+            string qCmd;
+
+            if (adding)
+                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /ga /c\\" + pc + @" /n\\GHSMSPS01\" + queue;
+            else
+                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /gd /c\\" + pc + @" /n\\GHSMSPS01\" + queue;
+            
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(qCmd);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+
+            System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
+            
+
         }
 
         public void removeQueue(String queue)

@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.addTab = new System.Windows.Forms.TabPage();
+            this.addLocalButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.prtSearch = new System.Windows.Forms.TextBox();
             this.removeTab = new System.Windows.Forms.TabPage();
@@ -37,7 +38,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbPrinter = new System.Windows.Forms.Label();
             this.prtList = new System.Windows.Forms.CheckedListBox();
-            this.addButton = new System.Windows.Forms.Button();
+            this.localRadio = new System.Windows.Forms.RadioButton();
+            this.remoteRadio = new System.Windows.Forms.RadioButton();
+            this.pcName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.addRemoteButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.addTab.SuspendLayout();
             this.removeTab.SuspendLayout();
@@ -57,21 +62,37 @@
             // addTab
             // 
             this.addTab.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.addTab.Controls.Add(this.addButton);
+            this.addTab.Controls.Add(this.addRemoteButton);
+            this.addTab.Controls.Add(this.label3);
+            this.addTab.Controls.Add(this.pcName);
+            this.addTab.Controls.Add(this.remoteRadio);
+            this.addTab.Controls.Add(this.localRadio);
+            this.addTab.Controls.Add(this.addLocalButton);
             this.addTab.Controls.Add(this.label1);
             this.addTab.Controls.Add(this.prtSearch);
             this.addTab.Location = new System.Drawing.Point(4, 22);
             this.addTab.Name = "addTab";
-            this.addTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.addTab.Padding = new System.Windows.Forms.Padding(3);
             this.addTab.Size = new System.Drawing.Size(203, 437);
             this.addTab.TabIndex = 1;
             this.addTab.Text = "Add";
+            // 
+            // addLocalButton
+            // 
+            this.addLocalButton.AllowDrop = true;
+            this.addLocalButton.Location = new System.Drawing.Point(63, 140);
+            this.addLocalButton.Name = "addLocalButton";
+            this.addLocalButton.Size = new System.Drawing.Size(75, 23);
+            this.addLocalButton.TabIndex = 11;
+            this.addLocalButton.Text = "Add";
+            this.addLocalButton.UseVisualStyleBackColor = true;
+            this.addLocalButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(30, 10);
+            this.label1.Location = new System.Drawing.Point(31, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(137, 30);
             this.label1.TabIndex = 1;
@@ -81,7 +102,7 @@
             // prtSearch
             // 
             this.prtSearch.AllowDrop = true;
-            this.prtSearch.Location = new System.Drawing.Point(25, 61);
+            this.prtSearch.Location = new System.Drawing.Point(26, 54);
             this.prtSearch.Name = "prtSearch";
             this.prtSearch.Size = new System.Drawing.Size(145, 20);
             this.prtSearch.TabIndex = 0;
@@ -139,16 +160,54 @@
             this.prtList.Size = new System.Drawing.Size(645, 346);
             this.prtList.TabIndex = 10;
             // 
-            // addButton
+            // localRadio
             // 
-            this.addButton.AllowDrop = true;
-            this.addButton.Location = new System.Drawing.Point(52, 111);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
-            this.addButton.TabIndex = 11;
-            this.addButton.Text = "Add";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            this.localRadio.AutoSize = true;
+            this.localRadio.Checked = true;
+            this.localRadio.Location = new System.Drawing.Point(5, 101);
+            this.localRadio.Name = "localRadio";
+            this.localRadio.Size = new System.Drawing.Size(51, 17);
+            this.localRadio.TabIndex = 12;
+            this.localRadio.TabStop = true;
+            this.localRadio.Text = "Local";
+            this.localRadio.UseVisualStyleBackColor = true;
+            this.localRadio.CheckedChanged += new System.EventHandler(this.localRadio_CheckedChanged);
+            // 
+            // remoteRadio
+            // 
+            this.remoteRadio.AutoSize = true;
+            this.remoteRadio.Location = new System.Drawing.Point(7, 196);
+            this.remoteRadio.Name = "remoteRadio";
+            this.remoteRadio.Size = new System.Drawing.Size(62, 17);
+            this.remoteRadio.TabIndex = 13;
+            this.remoteRadio.Text = "Remote";
+            this.remoteRadio.UseVisualStyleBackColor = true;
+            // 
+            // pcName
+            // 
+            this.pcName.Location = new System.Drawing.Point(26, 250);
+            this.pcName.Name = "pcName";
+            this.pcName.Size = new System.Drawing.Size(145, 20);
+            this.pcName.TabIndex = 14;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 234);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "PC Name:";
+            // 
+            // addRemoteButton
+            // 
+            this.addRemoteButton.Location = new System.Drawing.Point(63, 290);
+            this.addRemoteButton.Name = "addRemoteButton";
+            this.addRemoteButton.Size = new System.Drawing.Size(75, 23);
+            this.addRemoteButton.TabIndex = 16;
+            this.addRemoteButton.Text = "Add";
+            this.addRemoteButton.UseVisualStyleBackColor = true;
+            this.addRemoteButton.Click += new System.EventHandler(this.addRemoteButton_Click);
             // 
             // Form1
             // 
@@ -178,9 +237,14 @@
         private System.Windows.Forms.Label lbPrinter;
         private System.Windows.Forms.CheckedListBox prtList;
         private System.Windows.Forms.TabPage removeTab;
-        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button addLocalButton;
         private System.Windows.Forms.Button remButton;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox pcName;
+        private System.Windows.Forms.RadioButton remoteRadio;
+        private System.Windows.Forms.RadioButton localRadio;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button addRemoteButton;
     }
 }
 
