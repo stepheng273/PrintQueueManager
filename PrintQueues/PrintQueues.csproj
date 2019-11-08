@@ -57,7 +57,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Management.Automation.6.2.3\runtimes\win-arm64\lib\netcoreapp2.1\System.Management.Automation.dll</HintPath>
+      <HintPath>..\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
     </Reference>
     <Reference Include="System.Printing" />
     <Reference Include="System.ServiceProcess" />
