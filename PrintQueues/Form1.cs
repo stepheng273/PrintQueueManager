@@ -67,6 +67,8 @@ namespace PrintQueues
                 printer.updatePrtList(prtList);
                 addLocalButton.Visible = false;
             }
+
+            buttonStatus();
         }
 
         private void localRadio_CheckedChanged(object sender, EventArgs e)
@@ -111,7 +113,7 @@ namespace PrintQueues
         private void addRemoteButton_Click(object sender, EventArgs e)
         {
             string pc = pcName.Text;
-            foreach (object o in prtList.CheckedItems)
+            foreach (object o in prtList.)
             {
                 String queue = o.ToString();
                 //passing pc name, queue name, and add/remove printer(T/F)
@@ -122,6 +124,22 @@ namespace PrintQueues
         private void getPrtButton_Click(object sender, EventArgs e)
         {
             printer.updatePrtList(prtList, remPcText, "remove");
+        }
+
+        private void remLocalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStatus();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 about = new AboutBox1();
+            about.ShowDialog();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

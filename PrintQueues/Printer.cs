@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.ServiceProcess;
 using Microsoft.Management.Infrastructure;
 using System.Management.Automation;
+using System.Collections.ObjectModel;
 
 namespace PrintQueues
 {
@@ -17,6 +18,7 @@ namespace PrintQueues
 
         public Printer()
         {
+            //Attempts to connect to the printserver
             try
             {
                 myPrintServer = new System.Printing.PrintServer(@"\\ghsmsps01");
@@ -46,10 +48,10 @@ namespace PrintQueues
                 TextBox prtSearch = textBox as TextBox;
                 foreach (System.Printing.PrintQueue pq in pqc)
                 {
-
                     if (pq.Name.ToLower().Contains(prtSearch.Text.ToLower()) || pq.QueuePort.Name.Contains(prtSearch.Text)) //performs case insensitive search
                     {
-                        prtList.Items.Add(pq.Name);
+
+                        prtList.Items.Add(pq.Name + "\t\t" + "- " + pq.QueuePort.Name);
                     }
                 }
             }
@@ -63,17 +65,39 @@ namespace PrintQueues
 
                 PowerShell ps = PowerShell.Create(); // Create a new PowerShell instance
                 ps.Runspace = runspace; // Add the instance to the runspace
-                ps.Commands.AddScript("Invoke-Command -Computer " + prtSearch.Text + " -ScriptBlock {Get-Printer -ComputerName HOST7 | Format-List Name}"); // Add a script
+                ps.Commands.AddScript("get-wmiobject -class win32_printer -computername " + prtSearch.Text + " | ft name | out-string"); // Add a script
                 //ps.Commands.AddStatement().AddScript("Invoke-Command -Computer server2 -ScriptBlock {ipconfig}"); // Add a second statement and add another script to it
-                System.Collections.ObjectModel.Collection<PSObject> results = ps.Invoke();
+                Collection<PSObject> results = ps.Invoke();
 
                 runspace.Close();
 
                 StringBuilder stringBuilder = new StringBuilder();
+                string[] printers = new string[1000];
+                int i = 0;
+
                 foreach (PSObject obj in results)
                 {
-                    prtList.Items.Add(obj.ToString());
+                    foreach (char c in obj.BaseObject.ToString())
+                    {
+                        if (c == '\n')
+                        {
+                            printers[i] = stringBuilder.ToString();
+                            stringBuilder.Clear();
+                            i++;
+                        }
+                        else if (c != '\n' && c != '\r')
+                        {
+                            stringBuilder.Append(c);
+                        }
+                    }
                 }
+
+                foreach (string s in printers)
+                {
+                    if (s!=null && s != "" && !s.Contains("name") && !s.Contains("---"))
+                        prtList.Items.Add(s);
+                }
+               
             }
 
             else
@@ -161,7 +185,7 @@ namespace PrintQueues
         private void restartSpooler()
         {
             //Using the command prompt doesn't work well with Win7 and slower PCs. Sometimes the spooler doesn't start.
-
+            
             ServiceController sc = new ServiceController();
             sc.ServiceName = "Spooler";
 
