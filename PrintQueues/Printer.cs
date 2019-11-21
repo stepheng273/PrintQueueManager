@@ -41,8 +41,9 @@ namespace PrintQueues
 
         public void updatePrtList(object checkList, object textBox = null, string ar = "add")
         {
-            CheckedListBox prtList = checkList as CheckedListBox;
-            prtList.Items.Clear();
+            DataGridView prtList = checkList as DataGridView;
+            prtList.Rows.Clear();
+            //prtList.Items.Clear();
             if (textBox != null && ar == "add") 
             {
                 TextBox prtSearch = textBox as TextBox;
@@ -51,7 +52,7 @@ namespace PrintQueues
                     if (pq.Name.ToLower().Contains(prtSearch.Text.ToLower()) || pq.QueuePort.Name.Contains(prtSearch.Text)) //performs case insensitive search
                     {
 
-                        prtList.Items.Add(pq.Name + "\t\t" + "- " + pq.QueuePort.Name);
+                        prtList.Rows.Add(false, pq.Name, pq.QueuePort.Name);
                     }
                 }
             }
@@ -95,7 +96,7 @@ namespace PrintQueues
                 foreach (string s in printers)
                 {
                     if (s!=null && s != "" && !s.Contains("name") && !s.Contains("---"))
-                        prtList.Items.Add(s);
+                        prtList.Rows.Add(s);
                 }
                
             }
@@ -104,7 +105,7 @@ namespace PrintQueues
             {
                 foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
                 {
-                    prtList.Items.Add(s);
+                    prtList.Rows.Add(s);
                 }
             }
             

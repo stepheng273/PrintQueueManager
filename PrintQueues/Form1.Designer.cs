@@ -54,7 +54,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.prtList = new System.Windows.Forms.DataGridView();
-            this.queueName = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.addColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.queueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ipAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.addTab.SuspendLayout();
@@ -298,9 +299,10 @@
             // 
             // prtList
             // 
+            this.prtList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -308,6 +310,7 @@
             this.prtList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.prtList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.prtList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.addColumn,
             this.queueName,
             this.ipAddress});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -328,21 +331,32 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.prtList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.prtList.RowHeadersVisible = false;
             this.prtList.Size = new System.Drawing.Size(652, 413);
             this.prtList.TabIndex = 12;
             this.prtList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // addColumn
+            // 
+            this.addColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.addColumn.HeaderText = "√";
+            this.addColumn.Name = "addColumn";
+            this.addColumn.Width = 22;
+            // 
             // queueName
             // 
+            this.queueName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.queueName.HeaderText = "Queue";
             this.queueName.Name = "queueName";
             this.queueName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.queueName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.queueName.Width = 73;
             // 
             // ipAddress
             // 
+            this.ipAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ipAddress.HeaderText = "IP";
             this.ipAddress.Name = "ipAddress";
+            this.ipAddress.Width = 45;
             // 
             // Form1
             // 
@@ -393,7 +407,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.DataGridView prtList;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn queueName;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn addColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn queueName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ipAddress;
     }
 }

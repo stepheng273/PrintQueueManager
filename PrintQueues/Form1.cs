@@ -34,7 +34,7 @@ namespace PrintQueues
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            foreach(object o in prtList.CheckedItems)
+            foreach(object o in prtList.Rows)
             {
                 String queue = o.ToString();
                 printer.addQueue(queue);
@@ -43,7 +43,7 @@ namespace PrintQueues
 
         private void remButton_Click(object sender, EventArgs e)
         {
-            foreach (object o in prtList.CheckedItems)
+            foreach (object o in prtList.Rows)
             {
                 String queue = o.ToString();
                 System.Console.WriteLine(queue);
@@ -113,7 +113,7 @@ namespace PrintQueues
         private void addRemoteButton_Click(object sender, EventArgs e)
         {
             string pc = pcName.Text;
-            foreach (object o in prtList.)
+            foreach (object o in prtList.Rows)
             {
                 String queue = o.ToString();
                 //passing pc name, queue name, and add/remove printer(T/F)
