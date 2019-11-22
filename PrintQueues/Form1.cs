@@ -34,22 +34,41 @@ namespace PrintQueues
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            foreach(object o in prtList.Rows)
+            bool b;
+            string pc = pcName.Text;
+            foreach (DataGridViewRow r in prtList.Rows)
             {
-                String queue = o.ToString();
-                printer.addQueue(queue);
+                
+                try
+                {
+                    b = (bool)r.Cells[0].Value;
+                }
+                catch(NullReferenceException ex) { return; }
+                if (b == true)
+                {
+                    String queue = r.Cells[1].Value.ToString();
+                    printer.addQueue(queue);
+                }
             }
         }
 
         private void remButton_Click(object sender, EventArgs e)
         {
-            foreach (object o in prtList.Rows)
+            bool b;
+            foreach (DataGridViewRow r in prtList.Rows)
             {
-                String queue = o.ToString();
-                System.Console.WriteLine(queue);
-                printer.removeQueue(queue);
+                try
+                {
+                    b = (bool)r.Cells[0].Value;
+                }
+                catch (NullReferenceException ex) { return; }
+
+                if (b == true)
+                {
+                    String queue = r.Cells[1].Value.ToString();
+                    printer.removeQueue(queue);
+                }
             }
-            printer.updatePrtList(prtList);
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,11 +132,12 @@ namespace PrintQueues
         private void addRemoteButton_Click(object sender, EventArgs e)
         {
             string pc = pcName.Text;
-            foreach (object o in prtList.Rows)
+            foreach (DataGridViewRow r in prtList.Rows)
             {
-                String queue = o.ToString();
+                String queue = r.Cells[1].ToString();
+                Console.WriteLine(queue);
                 //passing pc name, queue name, and add/remove printer(T/F)
-                printer.remoteQueue(pc, queue, true);
+                //printer.remoteQueue(pc, queue, true);
             }
         }
 

@@ -39,6 +39,7 @@ namespace PrintQueues
             pqc = myPrintServer.GetPrintQueues();
         }
 
+        //ar is add/remove tab selection
         public void updatePrtList(object checkList, object textBox = null, string ar = "add")
         {
             DataGridView prtList = checkList as DataGridView;
@@ -57,6 +58,7 @@ namespace PrintQueues
                 }
             }
 
+            //For getting printers from a remote PC
             else if (textBox != null && ar == "remove")
             {
                 TextBox prtSearch = textBox as TextBox;
@@ -96,7 +98,7 @@ namespace PrintQueues
                 foreach (string s in printers)
                 {
                     if (s!=null && s != "" && !s.Contains("name") && !s.Contains("---"))
-                        prtList.Rows.Add(s);
+                        prtList.Rows.Add(false, s);
                 }
                
             }
@@ -105,7 +107,7 @@ namespace PrintQueues
             {
                 foreach (String s in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
                 {
-                    prtList.Rows.Add(s);
+                    prtList.Rows.Add(false, s);
                 }
             }
             
