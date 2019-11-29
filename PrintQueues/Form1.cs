@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 
 namespace PrintQueues
@@ -65,8 +66,14 @@ namespace PrintQueues
 
                 if (b == true)
                 {
+
                     String queue = r.Cells[1].Value.ToString();
-                    printer.removeQueue(queue);
+                    if (sender == remButton)
+                        printer.removeQueue(queue);
+                    else if(sender == remRemoveButton)
+                    {
+                        printer.remoteQueue(removePcName.Text, queue, false);
+                    }
                 }
             }
         }
@@ -83,8 +90,10 @@ namespace PrintQueues
 
             else if (tabControl1.SelectedTab.Text == "Remove")
             {
-                printer.updatePrtList(prtList);
                 addLocalButton.Visible = false;
+
+                //also updates the prtList
+                remLocalRadio_CheckedChanged(sender, e);
             }
 
             buttonStatus();
@@ -114,7 +123,7 @@ namespace PrintQueues
             if (remLocalRadio.Checked)
             {
                 remButton.Enabled = true;
-                remPcText.Enabled = false;
+                removePcName.Enabled = false;
                 getPrtButton.Enabled = false;
                 remRemoveButton.Enabled = false;
             }
@@ -122,7 +131,7 @@ namespace PrintQueues
             else if (remRemoteRadio.Checked)
             {
                 remButton.Enabled = false;
-                remPcText.Enabled = true;
+                removePcName.Enabled = true;
                 getPrtButton.Enabled = true;
                 remRemoveButton.Enabled = true;
             }
@@ -131,24 +140,37 @@ namespace PrintQueues
 
         private void addRemoteButton_Click(object sender, EventArgs e)
         {
-            string pc = pcName.Text;
+            bool b;
             foreach (DataGridViewRow r in prtList.Rows)
             {
-                String queue = r.Cells[1].ToString();
-                Console.WriteLine(queue);
-                //passing pc name, queue name, and add/remove printer(T/F)
-                //printer.remoteQueue(pc, queue, true);
+                try
+                {
+                    b = (bool)r.Cells[0].Value;
+                }
+                catch (NullReferenceException ex) { return; }
+
+                if (b == true)
+                {
+                    String queue = r.Cells[1].Value.ToString();
+                    printer.remoteQueue(pcName.Text, queue, adding: true);
+                }
             }
         }
 
         private void getPrtButton_Click(object sender, EventArgs e)
         {
-            printer.updatePrtList(prtList, remPcText, "remove");
+            printer.updatePrtList(prtList, removePcName, "remove");
         }
 
         private void remLocalRadio_CheckedChanged(object sender, EventArgs e)
         {
             buttonStatus();
+            if (remLocalRadio.Checked)
+                printer.updatePrtList(prtList, null, "remove");
+            else
+            
+                printer.updatePrtList(prtList, removePcName, "remove");
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,6 +182,13 @@ namespace PrintQueues
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void remRemoveButton_Click(object sender, EventArgs e)
+        {
+            remButton_Click(sender, e);
+            Thread.Sleep(500);
+            getPrtButton_Click(sender, e);
         }
     }
 }

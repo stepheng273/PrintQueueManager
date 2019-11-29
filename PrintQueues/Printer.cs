@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -8,6 +7,8 @@ using System.ServiceProcess;
 using Microsoft.Management.Infrastructure;
 using System.Management.Automation;
 using System.Collections.ObjectModel;
+using Microsoft.Win32;
+using System.IO;
 
 namespace PrintQueues
 {
@@ -61,41 +62,28 @@ namespace PrintQueues
             //For getting printers from a remote PC
             else if (textBox != null && ar == "remove")
             {
-                TextBox prtSearch = textBox as TextBox;
+                TextBox pcName = textBox as TextBox;
+                RegistryKey reg;
+                RegistryKey env;
+                List<string> results = new List<string>();
 
-                System.Management.Automation.Runspaces.Runspace runspace = System.Management.Automation.Runspaces.RunspaceFactory.CreateRunspace();
-                runspace.Open();
-
-                PowerShell ps = PowerShell.Create(); // Create a new PowerShell instance
-                ps.Runspace = runspace; // Add the instance to the runspace
-                ps.Commands.AddScript("get-wmiobject -class win32_printer -computername " + prtSearch.Text + " | ft name | out-string"); // Add a script
-                //ps.Commands.AddStatement().AddScript("Invoke-Command -Computer server2 -ScriptBlock {ipconfig}"); // Add a second statement and add another script to it
-                Collection<PSObject> results = ps.Invoke();
-
-                runspace.Close();
-
-                StringBuilder stringBuilder = new StringBuilder();
-                string[] printers = new string[1000];
-                int i = 0;
-
-                foreach (PSObject obj in results)
+                try
                 {
-                    foreach (char c in obj.BaseObject.ToString())
+                    reg = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, pcName.Text);
+                    env = reg.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Connections");
+                    foreach(string s in env.GetSubKeyNames())
                     {
-                        if (c == '\n')
-                        {
-                            printers[i] = stringBuilder.ToString();
-                            stringBuilder.Clear();
-                            i++;
-                        }
-                        else if (c != '\n' && c != '\r')
-                        {
-                            stringBuilder.Append(c);
-                        }
+                        RegistryKey printerKey = env.OpenSubKey(s);
+                        results.Add(printerKey.GetValue("Printer") as string);
                     }
                 }
 
-                foreach (string s in printers)
+                catch(Exception e)
+                {
+                    Console.WriteLine("error with registry");
+                }
+
+                foreach (string s in results)
                 {
                     if (s!=null && s != "" && !s.Contains("name") && !s.Contains("---"))
                         prtList.Rows.Add(false, s);
@@ -135,35 +123,7 @@ namespace PrintQueues
 
             System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
         }
-
-        public void remoteQueue(String pc, String queue, bool adding)
-        {
-            string qCmd;
-
-            if (adding)
-                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /ga /c\\" + pc + @" /n\\GHSMSPS01\" + queue;
-            else
-                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /gd /c\\" + pc + @" /n\\GHSMSPS01\" + queue;
-            
-            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
-            cmd.StartInfo.FileName = "cmd.exe";
-            cmd.StartInfo.RedirectStandardInput = true;
-            cmd.StartInfo.RedirectStandardOutput = true;
-            cmd.StartInfo.CreateNoWindow = false;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-
-            cmd.StandardInput.WriteLine(qCmd);
-            cmd.StandardInput.Flush();
-            cmd.StandardInput.Close();
-            cmd.WaitForExit();
-            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
-
-            System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
-            
-
-        }
-
+        
         public void removeQueue(String queue)
         {
             string qCmd = "rundll32 printui.dll,PrintUIEntry /gd /n" + queue;
@@ -183,6 +143,34 @@ namespace PrintQueues
             cmd.WaitForExit();
             Console.WriteLine(cmd.StandardOutput.ReadToEnd());
             restartSpooler();
+        }
+
+        public void remoteQueue(String pc, String queue, bool adding)
+        {
+            string qCmd;
+
+            if (adding)
+                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /ga /c\\" + pc + @" /n\\GHSMSPS01\" + queue;
+            else
+                qCmd = @"rundll32 printui.dll,PrintUIEntry /in /gd /c\\" + pc + @" /n" + queue;
+            
+            Console.WriteLine(qCmd);
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(qCmd);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
+            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+
+            System.Printing.PrintQueue pq = new System.Printing.PrintQueue(myPrintServer, queue);
+
         }
 
         private void restartSpooler()
