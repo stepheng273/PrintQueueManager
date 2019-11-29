@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.addTab = new System.Windows.Forms.TabPage();
             this.addRemoteButton = new System.Windows.Forms.Button();
@@ -39,29 +42,38 @@
             this.label1 = new System.Windows.Forms.Label();
             this.prtSearch = new System.Windows.Forms.TextBox();
             this.removeTab = new System.Windows.Forms.TabPage();
+            this.getPrtButton = new System.Windows.Forms.Button();
+            this.remLocalRadio = new System.Windows.Forms.RadioButton();
+            this.remRemoveButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.removePcName = new System.Windows.Forms.TextBox();
+            this.remRemoteRadio = new System.Windows.Forms.RadioButton();
             this.remButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbPrinter = new System.Windows.Forms.Label();
-            this.prtList = new System.Windows.Forms.CheckedListBox();
-            this.remRemoveButton = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.remPcText = new System.Windows.Forms.TextBox();
-            this.remRemoteRadio = new System.Windows.Forms.RadioButton();
-            this.remLocalRadio = new System.Windows.Forms.RadioButton();
-            this.getPrtButton = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.prtList = new System.Windows.Forms.DataGridView();
+            this.addColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.queueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ipAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.addTab.SuspendLayout();
             this.removeTab.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.prtList)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControl1.Controls.Add(this.addTab);
             this.tabControl1.Controls.Add(this.removeTab);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(12, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(211, 463);
+            this.tabControl1.Size = new System.Drawing.Size(211, 448);
             this.tabControl1.TabIndex = 8;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -79,7 +91,7 @@
             this.addTab.Location = new System.Drawing.Point(4, 22);
             this.addTab.Name = "addTab";
             this.addTab.Padding = new System.Windows.Forms.Padding(3);
-            this.addTab.Size = new System.Drawing.Size(203, 437);
+            this.addTab.Size = new System.Drawing.Size(203, 422);
             this.addTab.TabIndex = 1;
             this.addTab.Text = "Add";
             // 
@@ -170,15 +182,74 @@
             this.removeTab.Controls.Add(this.remLocalRadio);
             this.removeTab.Controls.Add(this.remRemoveButton);
             this.removeTab.Controls.Add(this.label4);
-            this.removeTab.Controls.Add(this.remPcText);
+            this.removeTab.Controls.Add(this.removePcName);
             this.removeTab.Controls.Add(this.remRemoteRadio);
             this.removeTab.Controls.Add(this.remButton);
             this.removeTab.Controls.Add(this.label2);
             this.removeTab.Location = new System.Drawing.Point(4, 22);
             this.removeTab.Name = "removeTab";
-            this.removeTab.Size = new System.Drawing.Size(203, 437);
+            this.removeTab.Size = new System.Drawing.Size(203, 422);
             this.removeTab.TabIndex = 2;
             this.removeTab.Text = "Remove";
+            // 
+            // getPrtButton
+            // 
+            this.getPrtButton.Location = new System.Drawing.Point(49, 279);
+            this.getPrtButton.Name = "getPrtButton";
+            this.getPrtButton.Size = new System.Drawing.Size(126, 23);
+            this.getPrtButton.TabIndex = 22;
+            this.getPrtButton.Text = "Get Installed Printers";
+            this.getPrtButton.UseVisualStyleBackColor = true;
+            this.getPrtButton.Click += new System.EventHandler(this.getPrtButton_Click);
+            // 
+            // remLocalRadio
+            // 
+            this.remLocalRadio.AutoSize = true;
+            this.remLocalRadio.Checked = true;
+            this.remLocalRadio.Location = new System.Drawing.Point(20, 78);
+            this.remLocalRadio.Name = "remLocalRadio";
+            this.remLocalRadio.Size = new System.Drawing.Size(51, 17);
+            this.remLocalRadio.TabIndex = 21;
+            this.remLocalRadio.TabStop = true;
+            this.remLocalRadio.Text = "Local";
+            this.remLocalRadio.UseVisualStyleBackColor = true;
+            this.remLocalRadio.CheckedChanged += new System.EventHandler(this.remLocalRadio_CheckedChanged);
+            // 
+            // remRemoveButton
+            // 
+            this.remRemoveButton.Location = new System.Drawing.Point(73, 327);
+            this.remRemoveButton.Name = "remRemoveButton";
+            this.remRemoveButton.Size = new System.Drawing.Size(75, 23);
+            this.remRemoveButton.TabIndex = 20;
+            this.remRemoveButton.Text = "Remove";
+            this.remRemoveButton.UseVisualStyleBackColor = true;
+            this.remRemoveButton.Click += new System.EventHandler(this.remRemoveButton_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(36, 235);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "PC Name:";
+            // 
+            // removePcName
+            // 
+            this.removePcName.Location = new System.Drawing.Point(39, 251);
+            this.removePcName.Name = "removePcName";
+            this.removePcName.Size = new System.Drawing.Size(145, 20);
+            this.removePcName.TabIndex = 18;
+            // 
+            // remRemoteRadio
+            // 
+            this.remRemoteRadio.AutoSize = true;
+            this.remRemoteRadio.Location = new System.Drawing.Point(20, 197);
+            this.remRemoteRadio.Name = "remRemoteRadio";
+            this.remRemoteRadio.Size = new System.Drawing.Size(62, 17);
+            this.remRemoteRadio.TabIndex = 17;
+            this.remRemoteRadio.Text = "Remote";
+            this.remRemoteRadio.UseVisualStyleBackColor = true;
             // 
             // remButton
             // 
@@ -211,72 +282,87 @@
             this.lbPrinter.TabIndex = 9;
             this.lbPrinter.Text = "Printers";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(890, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // prtList
             // 
-            this.prtList.CheckOnClick = true;
-            this.prtList.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prtList.FormattingEnabled = true;
-            this.prtList.Location = new System.Drawing.Point(229, 76);
+            this.prtList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.prtList.BackgroundColor = System.Drawing.SystemColors.Menu;
+            this.prtList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.prtList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.prtList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.prtList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.addColumn,
+            this.queueName,
+            this.ipAddress});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.prtList.DefaultCellStyle = dataGridViewCellStyle2;
+            this.prtList.Location = new System.Drawing.Point(226, 58);
             this.prtList.Name = "prtList";
-            this.prtList.Size = new System.Drawing.Size(645, 346);
-            this.prtList.TabIndex = 10;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.prtList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.prtList.RowHeadersVisible = false;
+            this.prtList.Size = new System.Drawing.Size(652, 413);
+            this.prtList.TabIndex = 12;
+            this.prtList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // remRemoveButton
+            // addColumn
             // 
-            this.remRemoveButton.Location = new System.Drawing.Point(73, 327);
-            this.remRemoveButton.Name = "remRemoveButton";
-            this.remRemoveButton.Size = new System.Drawing.Size(75, 23);
-            this.remRemoveButton.TabIndex = 20;
-            this.remRemoveButton.Text = "Remove";
-            this.remRemoveButton.UseVisualStyleBackColor = true;
+            this.addColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.addColumn.HeaderText = "√";
+            this.addColumn.Name = "addColumn";
+            this.addColumn.Width = 22;
             // 
-            // label4
+            // queueName
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 235);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "PC Name:";
+            this.queueName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.queueName.HeaderText = "Queue";
+            this.queueName.Name = "queueName";
+            this.queueName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.queueName.Width = 73;
             // 
-            // remPcText
+            // ipAddress
             // 
-            this.remPcText.Location = new System.Drawing.Point(39, 251);
-            this.remPcText.Name = "remPcText";
-            this.remPcText.Size = new System.Drawing.Size(145, 20);
-            this.remPcText.TabIndex = 18;
-            // 
-            // remRemoteRadio
-            // 
-            this.remRemoteRadio.AutoSize = true;
-            this.remRemoteRadio.Location = new System.Drawing.Point(20, 197);
-            this.remRemoteRadio.Name = "remRemoteRadio";
-            this.remRemoteRadio.Size = new System.Drawing.Size(62, 17);
-            this.remRemoteRadio.TabIndex = 17;
-            this.remRemoteRadio.Text = "Remote";
-            this.remRemoteRadio.UseVisualStyleBackColor = true;
-            // 
-            // remLocalRadio
-            // 
-            this.remLocalRadio.AutoSize = true;
-            this.remLocalRadio.Checked = true;
-            this.remLocalRadio.Location = new System.Drawing.Point(20, 78);
-            this.remLocalRadio.Name = "remLocalRadio";
-            this.remLocalRadio.Size = new System.Drawing.Size(51, 17);
-            this.remLocalRadio.TabIndex = 21;
-            this.remLocalRadio.TabStop = true;
-            this.remLocalRadio.Text = "Local";
-            this.remLocalRadio.UseVisualStyleBackColor = true;
-            // 
-            // getPrtButton
-            // 
-            this.getPrtButton.Location = new System.Drawing.Point(49, 277);
-            this.getPrtButton.Name = "getPrtButton";
-            this.getPrtButton.Size = new System.Drawing.Size(126, 23);
-            this.getPrtButton.TabIndex = 22;
-            this.getPrtButton.Text = "Get Installed Printers";
-            this.getPrtButton.UseVisualStyleBackColor = true;
-            this.getPrtButton.Click += new System.EventHandler(this.getPrtButton_Click);
+            this.ipAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ipAddress.HeaderText = "IP";
+            this.ipAddress.Name = "ipAddress";
+            this.ipAddress.Width = 45;
             // 
             // Form1
             // 
@@ -286,6 +372,8 @@
             this.Controls.Add(this.prtList);
             this.Controls.Add(this.lbPrinter);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
@@ -293,6 +381,9 @@
             this.addTab.PerformLayout();
             this.removeTab.ResumeLayout(false);
             this.removeTab.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.prtList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,7 +395,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox prtSearch;
         private System.Windows.Forms.Label lbPrinter;
-        private System.Windows.Forms.CheckedListBox prtList;
         private System.Windows.Forms.TabPage removeTab;
         private System.Windows.Forms.Button addLocalButton;
         private System.Windows.Forms.Button remButton;
@@ -318,8 +408,14 @@
         private System.Windows.Forms.RadioButton remLocalRadio;
         private System.Windows.Forms.Button remRemoveButton;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox remPcText;
+        private System.Windows.Forms.TextBox removePcName;
         private System.Windows.Forms.RadioButton remRemoteRadio;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.DataGridView prtList;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn addColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn queueName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ipAddress;
     }
 }
 
