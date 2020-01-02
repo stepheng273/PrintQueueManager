@@ -1,4 +1,5 @@
 ﻿using System;
+using MaterialSkin.Controls;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace PrintQueues
             //prtList.Items.Clear();
             if (textBox != null && ar == "add") 
             {
-                TextBox prtSearch = textBox as TextBox;
+                MaterialSingleLineTextField prtSearch = textBox as MaterialSingleLineTextField;
                 foreach (System.Printing.PrintQueue pq in pqc)
                 {
                     if (pq.Name.ToLower().Contains(prtSearch.Text.ToLower()) || pq.QueuePort.Name.Contains(prtSearch.Text)) //performs case insensitive search
@@ -62,7 +63,7 @@ namespace PrintQueues
             //For getting printers from a remote PC
             else if (textBox != null && ar == "remove")
             {
-                TextBox pcName = textBox as TextBox;
+                MaterialSingleLineTextField pcName = textBox as MaterialSingleLineTextField;
                 RegistryKey reg;
                 RegistryKey env;
                 List<string> results = new List<string>();

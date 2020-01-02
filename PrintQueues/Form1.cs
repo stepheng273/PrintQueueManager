@@ -1,4 +1,5 @@
 ﻿using System;
+using MaterialSkin.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,17 +9,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-
+using MaterialSkin;
+using System.Drawing.Text;
+using System.IO;
 
 namespace PrintQueues
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MaterialForm
     {
         private Printer printer;
+        PrivateFontCollection fonts = new PrivateFontCollection();
+        MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
 
         public Form1()
         {
             InitializeComponent();
+
+            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(
+            Primary.Blue500, Primary.Blue700,
+            Primary.Blue300, Accent.LightBlue200, TextShade.WHITE);
 
             printer = new Printer();
             printer.updatePrtList(prtList, prtSearch);
@@ -35,6 +47,7 @@ namespace PrintQueues
 
         private void addButton_Click(object sender, EventArgs e)
         {
+            addLocalButton.Cursor = Cursors.WaitCursor;
             bool b;
             string pc = pcName.Text;
             foreach (DataGridViewRow r in prtList.Rows)
@@ -44,17 +57,23 @@ namespace PrintQueues
                 {
                     b = (bool)r.Cells[0].Value;
                 }
-                catch(NullReferenceException ex) { return; }
+                catch(NullReferenceException ex) 
+                {
+                    addLocalButton.Cursor = Cursors.Arrow;
+                    return;
+                }
                 if (b == true)
                 {
                     String queue = r.Cells[1].Value.ToString();
                     printer.addQueue(queue);
                 }
             }
+            
         }
 
         private void remButton_Click(object sender, EventArgs e)
         {
+            remButton.Cursor = Cursors.WaitCursor;
             bool b;
             foreach (DataGridViewRow r in prtList.Rows)
             {
@@ -62,7 +81,13 @@ namespace PrintQueues
                 {
                     b = (bool)r.Cells[0].Value;
                 }
-                catch (NullReferenceException ex) { return; }
+                catch (NullReferenceException ex) 
+                {
+                    Thread.Sleep(500);
+                    tabControl1_SelectedIndexChanged(sender, e);
+                    remButton.Cursor = Cursors.Arrow;
+                    return;
+                }
 
                 if (b == true)
                 {
@@ -76,11 +101,12 @@ namespace PrintQueues
                     }
                 }
             }
+            remButton.Cursor = Cursors.Default;
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Console.WriteLine(tabControl1.SelectedTab.Name);
+            
             if (tabControl1.SelectedTab.Text == "Add")
             {
                 //prtList.Items.Clear();
@@ -189,6 +215,19 @@ namespace PrintQueues
             remButton_Click(sender, e);
             Thread.Sleep(500);
             getPrtButton_Click(sender, e);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DarkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as MaterialCheckBox).Checked)
+                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            else
+                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
         }
     }
 }
