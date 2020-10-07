@@ -27,7 +27,8 @@ namespace PrintQueues
 
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            DarkMode.Checked = true;
             materialSkinManager.ColorScheme = new ColorScheme(
             Primary.Blue500, Primary.Blue700,
             Primary.Blue300, Accent.LightBlue200, TextShade.WHITE);
